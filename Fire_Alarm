@@ -1,0 +1,49 @@
+// C++ code
+//
+float temp; //stores calculated temperature in celsius
+float vout; //raw analog value from temperature sensor A1
+float vout1; //Voltage covered from analog value
+int led = 9; 
+int gasSensor; //stores analog reading from gas sensor
+int piezo = 8; //pin number of the buzzer
+void setup() 
+{ 
+pinMode(A0,INPUT); 
+pinMode(A1, INPUT); 
+pinMode(led,OUTPUT); 
+pinMode(piezo,OUTPUT); 
+Serial.begin(9600); //starts serial communication to display values on the serial monitor at 9600 baud rate
+} 
+void loop() 
+{ 
+vout=analogRead(A1); // read analog value from teperature sensor(A1)
+vout1=(vout/1023.0)*5000.0; 
+temp=(vout1-500)/10; 
+//gasSensor=analogRead(A0); 
+ gasSensor= 800;
+if (temp>=80) 
+{ 
+digitalWrite(led,HIGH); 
+} 
+else 
+{ 
+digitalWrite(led,LOW); 
+} 
+if (gasSensor>=200) 
+{ 
+digitalWrite(piezo,HIGH); 
+} 
+else 
+{ 
+digitalWrite(piezo,LOW); 
+} 
+Serial.print("in DegreeC= "); 
+Serial.print(" "); 
+Serial.print(temp); 
+Serial.print("\t"); 
+Serial.print("GasSensor= "); 
+Serial.print(" "); 
+Serial.print(gasSensor); 
+Serial.println(); 
+delay(1000); 
+}
